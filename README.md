@@ -8,9 +8,3 @@ A basic spell checker for .eaf files. Especially useful if you are preparing tra
 * NOTES: 
     *At this time, eaf_spell_check.py requires that the file to be checked either be in the same directory as the script itself, or for an absolute path to be specified.
     *Because this program depends on PyEnchant, it can only be run using a 32 bit python interpreter.
-=======
-This is a collection of programs to help in reviewing and preparing ELAN .eaf transcription files. A brief description of each script is given below.
-
-1. eaf_spell_check.py
-  A basic spell checker for .eaf files. 
->>>>>>> origin/master
