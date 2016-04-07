@@ -6,5 +6,5 @@ A basic spell checker for .eaf files. Especially useful if you are preparing tra
 
 * USAGE: (python) eaf_spell_check.py <file>
 * NOTES: 
-    *At this time, eaf_spell_check.py requires that the file to be checked either be in the same directory as the script itself, or for an absolute path to be specified.
+    *At this time, eaf_spell_check.py requires that the file to be checked either be in the same directory as the script itself, or for an absolute path to be specified. \n
     *Because this program depends on PyEnchant, it can only be run using a 32 bit python interpreter.
