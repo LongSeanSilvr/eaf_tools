@@ -13,12 +13,13 @@ import os
 import re
 import pydub
 
+
 # ======================================================================================================================
 # Main Functions
 # ======================================================================================================================
 def main():
-    dir_list = ["{}/{}".format(dir_name, file) for file in os.listdir(dir_name) if
-                file.endswith(".eaf")]
+    dir_list = ["{}/{}".format(dir_name, f) for f in os.listdir(dir_name) if
+                f.endswith(".eaf")]
     combined_eaf = reduce(merge, dir_list)
     write_eaf(combined_eaf)
     print "\nDONE!\nmerged .eaf file is located in the directory you specified, and is named 'combined.eaf'."
@@ -59,16 +60,16 @@ def adjust_text(orig, adjusted, text):
     return text
 
 
-def id_adjust(type, id_max, annos):
+def id_adjust(condition, id_max, annotations):
     annos_id_adjusted = []
-    for anno in annos:
+    for anno in annotations:
         toks = anno.split(" ")
         tok_adjs = []
         for tok in toks:
             tok_adj = tok
-            if type == "ts":
+            if condition == "ts":
                 match = re.search(r'="ts(\d+)"', tok_adj)
-            elif type == "a":
+            elif condition == "a":
                 match = re.search(r'="a(\d+)"', tok_adj)
             if match is not None:
                 id_num = match.group(1)
@@ -105,6 +106,7 @@ def adjust_time(ytext, xfilename, yfilename):
 
     return ytext_time_adj
 
+
 def get_wav_duration(filename):
     wav_name = re.sub(r'.eaf', r'.wav', filename)
     try:
@@ -116,10 +118,13 @@ def get_wav_duration(filename):
     duration_ms = int(duration_s * 1000)
     return duration_ms
 
+
 def adjust_media_reference(text):
-    adjusted = re.sub(r'<MEDIA_DESCRIPTOR MEDIA_URL=".*" MIME_TYPE', r'<MEDIA_DESCRIPTOR MEDIA_URL="ASK_on_OPEN.wav" MIME_TYPE', text)
+    adjusted = re.sub(r'<MEDIA_DESCRIPTOR MEDIA_URL=".*" MIME_TYPE',
+                      r'<MEDIA_DESCRIPTOR MEDIA_URL="ASK_on_OPEN.wav" MIME_TYPE', text)
     adjusted = re.sub(r'RELATIVE_MEDIA_URL=".*"/>', r'RELATIVE_MEDIA_URL="./combined.wav"/>', adjusted)
     return adjusted
+
 
 # ======================================================================================================================
 # Combination Functions
@@ -132,12 +137,9 @@ def combine_annotations(xtext, ytext):
     for id in tier_ids:
         try:
             y_tier_dict[id] = re.search(r'TIER_ID="{}">(.*?)</TIER>'.format(id), ytext, re.DOTALL).group(1)
-        except AttributeError: # guard against empty tiers
+        except AttributeError:  # guard against empty tiers
             continue
     for id in y_tier_dict:
-        m = re.search(r'(TIER_ID="{}">.*?)(</TIER>)'.format(id), combinedtext, flags=re.DOTALL)
-        if m is not None:
-            match = m.group(1)
         combinedtext = re.sub(r'(TIER_ID="{}">.*?)(</TIER>)'.format(id), r'\1{}\2'.format(y_tier_dict[id]),
                               combinedtext, flags=re.DOTALL)
     return combinedtext
@@ -174,6 +176,8 @@ def max_id(type, file_text):
         pat = r'="a(\d+)"'
     elif type == "ts":
         pat = r'="ts(\d+)"'
+    else:
+        sys.exit("Error occured")
     id_list = re.findall(pat, file_text)
     numlist = [int(id) for id in id_list]
     max_id = max(numlist)
@@ -183,6 +187,8 @@ def max_id(type, file_text):
 def write_eaf(eaf_file):
     with open("{}/{}".format(dir_name, "combined.eaf"), "wb") as f:
         f.write(eaf_file)
+
+
 # ======================================================================================================================
 # Run
 # ======================================================================================================================
