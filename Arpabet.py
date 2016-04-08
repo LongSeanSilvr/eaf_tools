@@ -1,3 +1,7 @@
+"""
+Script for automatically formatting list of unknown words from FAVE aligner into arpabet transcriptions
+"""
+
 import re, argparse
 
 def main():
