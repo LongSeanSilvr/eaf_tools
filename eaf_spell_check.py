@@ -1,12 +1,24 @@
 """
 Program for pre-processing and spell checking ELAN .eaf files.
 Author: Sean Simpson
-Last Modified: 4/1/2016
+Last Modified: 4/8/2016
 """
 
 import re
 import argparse
 import enchant
+
+
+# ======================================================================================================================
+# Main Function
+# ======================================================================================================================
+def main(text):
+    processed = pre_process(text)
+    annotations = extract_annotations(processed)
+    replacements = spell_check(annotations)
+    fixed = replace_lines(replacements, processed)
+    write_output(fixed)
+    return
 
 
 # ======================================================================================================================
@@ -149,23 +161,24 @@ def replace_lines(replace_dict, replace_text):
     return fixed_text
 
 
+def write_output(fixed):
+    file_name_SpChkd = re.sub(r'(.*)\.eaf', r'\1_SpChkd.eaf', file_name)
+    with open(file_name_SpChkd, "wb") as f:
+        f.write(fixed)
+    print '\n\nDONE!'
+
+
 # ======================================================================================================================
 # Run
 # ======================================================================================================================
-parser = argparse.ArgumentParser()
-parser.add_argument("file")
-options = parser.parse_args()
 
-fileName = options.file
-with open(fileName, "rb") as f:
-    text = f.read()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("file")
+    options = parser.parse_args()
 
-processed = pre_process(text)
-annotations = extract_annotations(processed)
-replacements = spell_check(annotations)
-fixed = replace_lines(replacements, processed)
+    file_name = options.file
+    with open(file_name, "rb") as f:
+        text = f.read()
 
-fileNameMod = re.sub(r'(.*)\.eaf', r'\1_mod.eaf', fileName)
-with open(fileNameMod, "wb") as f:
-    f.write(fixed)
-print '\n\nDONE!'
+    main(text)
