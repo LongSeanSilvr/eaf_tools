@@ -1,7 +1,9 @@
 """
 Python program for merging .eaf files
+Author: Sean Simpson
+Last Updated: 4/8/2016
 USAGE: (python) eaf_merge.py -d "/directory_name"
-    Note: directory must be in same folder as script, as of 4_6_2016.
+    Note: directory must be in same folder as script, or absolute path must be specified
     Note: this program currently requires that all .eaf files to be merged are named identically to their corresponding
         .wav files (except for file extension), and that .eaf and .wav files reside in the same directory.
 """
