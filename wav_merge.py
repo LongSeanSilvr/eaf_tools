@@ -15,7 +15,7 @@ def main():
                                                                           "ignore other filetypes in directory")
     options = parser.parse_args()
     combined = merge(options.dir)
-    combined.export("./{}/combined.wav".format(options.dir), format="wav")
+    combined.export("{}/combined.wav".format(options.dir), format="wav")
 
 def merge(dir_name):
     """
@@ -23,8 +23,8 @@ def merge(dir_name):
     :param dir_name: name of directory to look in (directory must be under same directory as script)
     :return: combined .wav object
     """
-    dir_list = [file for file in os.listdir("./{}".format(dir_name)) if file.endswith(".wav")]
-    wavs = [pydub.AudioSegment.from_wav("./{}/{}".format(dir_name,fname)) for fname in dir_list]
+    dir_list = [file for file in os.listdir(dir_name) if file.endswith(".wav")]
+    wavs = [pydub.AudioSegment.from_wav("{}/{}".format(dir_name,fname)) for fname in dir_list]
     combined = reduce( (lambda x,y: x + y), wavs)
     return combined
 
