@@ -27,9 +27,12 @@ instances" and "skip all instances" functionality.
 ## eaf_merge.py
 This program merges all .eaf files within a given directory and stores the output in "combined.eaf." 
 
-* USAGE: (python) eaf_merge.py -d "/directory_name"
+* USAGE: (python) eaf_merge.py \<directory_name/path/>
 
 * SETUP: 
-  * this program currently requires that all .eaf files to be merged are named identically to their corresponding .wav 
-  files (except for file extension), and that .eaf and .wav files reside in the same directory (i.e. the directory
-  to be merged)
+  * This program debends on pydub. To install this package, enter the following command in a terminal: 
+  ``` pip install pydub```
+  * This program currently requires that all .eaf files in the directory to be merged have identically named 
+  corresponding .wav files housed within the same directory. This is because the script needs to get the duration 
+  of the corresponding .wav files to adjust the .eaf timestamps accordingly.
+  
