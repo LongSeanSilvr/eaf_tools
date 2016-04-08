@@ -2,26 +2,25 @@
 Python program for merging .eaf files
 Author: Sean Simpson
 Last Updated: 4/8/2016
-USAGE: (python) eaf_merge.py -d "/directory_name"
+USAGE: (python) eaf_merge.py <directory_path>
     Note: directory must be in same folder as script, or absolute path must be specified
     Note: this program currently requires that all .eaf files to be merged are named identically to their corresponding
         .wav files (except for file extension), and that .eaf and .wav files reside in the same directory.
 """
 
+import sys
 import os
-import pydub
-import argparse
 import re
+import pydub
 
 # ======================================================================================================================
 # Main Functions
 # ======================================================================================================================
 def main():
-    dir_list = ["./{}/{}".format(dir_name, file) for file in os.listdir("./{}".format(dir_name)) if
+    dir_list = ["{}/{}".format(dir_name, file) for file in os.listdir("{}".format(dir_name)) if
                 file.endswith(".eaf")]
     combined_eaf = reduce(merge, dir_list)
     write_eaf(combined_eaf)
-    copy_pfsx(dir_list[0])
     return
 
 
@@ -107,7 +106,11 @@ def adjust_time(ytext, xfilename, yfilename):
 
 def get_wav_duration(filename):
     wav_name = re.sub(r'.eaf', r'.wav', filename)
-    wav = pydub.AudioSegment.from_wav(wav_name)
+    try:
+        wav = pydub.AudioSegment.from_wav(wav_name)
+    except IOError:
+        sys.exit("ERROR: could not find {}.\n Are you sure all .eaf files have identically named "
+                 "corresponding .wav files?".format(wav_name))
     duration_s = wav.duration_seconds
     duration_ms = int(duration_s * 1000)
     return duration_ms
@@ -175,25 +178,17 @@ def max_id(type, file_text):
     max_id = max(numlist)
     return max_id
 
-def copy_pfsx(eaf_file):
-    pfsx_name = re.sub(r'.eaf','.pfsx',eaf_file)
-    with open(pfsx_name, "rb") as f:
-        pfsx_template = f.read()
-    with open("./{}/{}".format(dir_name, "combined.pfsx"), "wb") as f:
-        f.write(pfsx_template)
-    return
 
 def write_eaf(eaf_file):
-    with open("./{}/{}".format(dir_name, "combined.eaf"), "wb") as f:
+    with open("{}/{}".format(dir_name, "combined.eaf"), "wb") as f:
         f.write(eaf_file)
 # ======================================================================================================================
 # Run
 # ======================================================================================================================
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--directory", action="store", dest="dir", help="directory of .wav files to merge. (will "
-                                                                              "ignore other filetypes in directory")
-    options = parser.parse_args()
-    dir_name = options.dir
+    try:
+        dir_name = re.sub(r'^(/|\\)', r'', sys.argv[1])
+    except IndexError:
+        sys.exit("ERROR: Please specify directory of .eaf files to merge.")
     total_wavetime = 0
     main()
