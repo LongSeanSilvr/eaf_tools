@@ -21,6 +21,7 @@ def main():
                 file.endswith(".eaf")]
     combined_eaf = reduce(merge, dir_list)
     write_eaf(combined_eaf)
+    print "\nDONE!\nmerged .eaf file is located in the directory you specified, and is named 'combined.eaf'."
     return
 
 
