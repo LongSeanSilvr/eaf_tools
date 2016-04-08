@@ -4,7 +4,9 @@ Author: Sean Simpson
 Last Modified: 4/1/2016
 """
 
-import re, argparse, enchant, collections
+import re
+import argparse
+import enchant
 
 
 # ======================================================================================================================
