@@ -30,7 +30,7 @@ This program merges all .eaf files within a given directory and stores the outpu
 * USAGE: (python) eaf_merge.py \<directory_name/path/>
 
 * SETUP: 
-  * This program debends on pydub. To install this package, enter the following command in a terminal: 
+  * This program debends on pydub. To install this package, enter the following command in a terminal:  
   ``` pip install pydub```
   * This program currently requires that all .eaf files in the directory to be merged have identically named 
   corresponding .wav files housed within the same directory. This is because the script needs to get the duration 
