@@ -6,7 +6,8 @@ A basic spell checker for .eaf files. Especially useful if you are preparing tra
 
 * USAGE: (python) eaf_spell_check.py <file_path>
 * SETUP:  
-  * To use this spell-checker you will need to download and install the python wrapper for the enchant dictionary. Do this by running the following command in a terminal: ```pip install pyenchant```
+  * To use this spell-checker you will need to download and install the python wrapper for the enchant dictionary. Do this by running the following command in a terminal: 
+  ```pip install pyenchant```
   * Enchant only works with 32 bit python interpreters, so you will need to run eaf_spell_check.py using a 32 bit python interpreter.
 * NOTES:  
   * At this time, eaf_spell_check.py requires that the file to be checked either be in the same directory as the script itself, or for an absolute path to be specified.  
