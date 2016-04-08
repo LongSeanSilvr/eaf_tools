@@ -10,7 +10,11 @@ A basic spell checker for .eaf files. Especially useful if you are preparing tra
     ```pip install pyenchant```
   * Enchant only works with 32 bit python interpreters, so you will need to run eaf_spell_check.py using a 32 bit python interpreter.
 * NOTES:  
-  * At this time, eaf_spell_check.py requires that the file to be checked either be in the same directory as the script itself, or for an absolute path to be specified.  
+  * At this time, eaf_spell_check.py requires that the file to be checked either be in the same directory as the script itself, or for an absolute path to be specified.
+  * At this time, eaf_spell_check.py is only compatible with Windows operating systems.
+* TASK LIST:  
+  - [ ] create version of program compatble with UNIX-like operating systems
     
 ## eaf_merge.py
+This program merges all .eaf files within a given directory and stores the output in "combined.eaf." 
 
