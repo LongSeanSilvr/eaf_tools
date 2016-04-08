@@ -10,7 +10,7 @@ import enchant
 
 
 # ======================================================================================================================
-# Function to replace nonstandard transcription conventions with standard conventions
+# Functions to replace nonstandard transcription conventions with standard conventions
 # ======================================================================================================================
 def pre_process(raw_text):
     """
@@ -25,11 +25,14 @@ def pre_process(raw_text):
     proc_text = num_hyph(proc_text)
     return proc_text
 
-def num_hyph(text):
+
+def num_hyph(rawtext):
     tens = r'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety'
     ones = r'one|two|three|four|five|six|seven|eight|nine'
-    hyphenated = re.sub("(?i)({})-? *({})".format(tens,ones), r'\1-\2', text)
+    hyphenated = re.sub("(?i)({})-? *({})".format(tens, ones), r'\1-\2', rawtext)
     return hyphenated
+
+
 # ======================================================================================================================
 # Annotation extractor
 # ======================================================================================================================
@@ -71,21 +74,21 @@ def spell_check(line_list):
 
 
 # ======================================================================================================================
-# Generate version of line with spelling corrections
+# Fix found typos
 # ======================================================================================================================
 def fix_line(line, auto_replace, skip, enchant_dict):
     """
-    Checks each word in a given line against enchantDict. Replaces unrecognized words if desired. Returns  corrected line
+    Checks each word in a given line against enchantDict. Replaces unrecognized words if desired. Returns corrected line
     and updated autoreplace & skip dictionaries.
     :param line: string to be corrected
     :param auto_replace: current version of dictionary with spelling mistakes and corrections to be automatically
     applied.
     :param skip: current version of skip-word list
-    :param enchant_dict: enchant dictionary object (this is generated outside of the function, so the dictionary only has
-    to be generated once
-    :return: named tuple with 3 items: "line", "auto_replace", and "skip". Line is the corrected version of the
-    checked line, and auto_replace is the dictionary object of misspellings to automatically correct, including any
-    updates. Skip is the updated list of skip-words
+    :param enchant_dict: enchant dictionary object (this is generated outside of the function, so the dictionary only
+    has to be generated once)
+    :return: tuple with 3 items: "line", "auto_replace", and "skip". "Line" is the corrected version of the
+    checked line, "auto_replace" is the dictionary object of misspellings to automatically correct, including any
+    updates, and "skip" is the updated list of skip-words
     """
     words = re.split(r'[^\w\'-]', line.strip(" "))
     for word in words:
@@ -98,7 +101,7 @@ def fix_line(line, auto_replace, skip, enchant_dict):
             line = re.sub(badreg, auto_replace[word], line)
         else:
             if not enchant_dict.check(word):
-                choice = raw_input("\nError: {error} \nLine: {line} \nReplace (y/n)? ".format(error=word,line=line))
+                choice = raw_input("\nError: {error} \nLine: {line} \nReplace (y/n)? ".format(error=word, line=line))
                 if not re.match(r'n(o)?', choice, re.IGNORECASE):
                     print "Suggestions: "
                     suggestions = {str(i + 1): item for i, item in enumerate(enchant_dict.suggest(word)[:9])}
@@ -130,9 +133,9 @@ def fix_line(line, auto_replace, skip, enchant_dict):
 # ======================================================================================================================
 def replace_lines(replace_dict, replace_text):
     """
-    takes dictionary of mistakes keyed to dictionaries of replacements and containing lines, replaces the mispelled word
-    with the given replacement in the containing line, and then replaces the original line with the fixed line in the
-    text
+    Takes dictionary of mistakes keyed to dictionaries of replacements and containing lines, replaces the misspelled
+    word with the given replacement in the containing line, and then replaces the original line with the fixed line in
+    the text.
     :param replace_dict: a dictionary of form: replacements[bad_word]{fixed_word: containing_line}
     :param replace_text: the original text in which to search and replace lines.
     :return: fixed text
@@ -147,7 +150,7 @@ def replace_lines(replace_dict, replace_text):
 
 
 # ======================================================================================================================
-# Implementation
+# Run
 # ======================================================================================================================
 parser = argparse.ArgumentParser()
 parser.add_argument("file")
