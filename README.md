@@ -5,14 +5,14 @@ This is a collection of python programs to help in reviewing and preparing ELAN 
 A basic spell checker for .eaf files. Especially useful if you are preparing transcriptions for forced alignment using FAVE or something like that. This program is meant to be run interactively in a terminal, and includes "replace all instances" and "skip all instances" functionality. 
 
 * USAGE: (python) eaf_spell_check.py <file_path>
-* Setup:  
-  * To use this spell checker you will need to download and install the python wrapper for the enchant dictionary. do this by calling 
+* SETUP:  
+  * To use this spell-checker you will need to download and install the python wrapper for the enchant dictionary. Do this by running the following command in a terminal: 
   ```shell 
   pip install pyenchant
   ```
-  in the terminal
-### NOTES:  
-* At this time, eaf_spell_check.py requires that the file to be checked either be in the same directory as the script itself, or for an absolute path to be specified.  
-* Because this program depends on PyEnchant, it can only be run using a 32 bit python interpreter.  
-  
+  * Enchant only works with 32 bit python interpreters, so you will need to run eaf_spell_check.py using a 32 bit python interpreter.
+* NOTES:  
+  * At this time, eaf_spell_check.py requires that the file to be checked either be in the same directory as the script itself, or for an absolute path to be specified.  
+    
 ## eaf_merge.py
+
