@@ -2,6 +2,8 @@
 Program for pre-processing and spell checking ELAN .eaf files.
 Author: Sean Simpson
 Last Modified: 4/8/2016
+
+Useage: (python) eaf_spell_checker.py <file_path>
 """
 
 import re
