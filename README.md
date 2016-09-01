@@ -1,5 +1,5 @@
-# eaf_utils
-This is a collection of python programs to help in reviewing and preparing ELAN .eaf transcription files. A brief descri
+# eaf_tools
+This is a collection of python scripts to help in reviewing and preparing ELAN .eaf transcription files. A brief descri
 ption of each script is given below.
 
 ## eaf_spell_check.py
