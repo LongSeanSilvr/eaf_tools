@@ -18,7 +18,7 @@ import pydub
 # Main Functions
 # ======================================================================================================================
 def main():
-    dir_list = ["{}/{}".format(dir_name, f) for f in os.listdir(dir_name) if
+    dir_list = [os.path.join(dir_name, f) for f in os.listdir(dir_name) if
                 f.endswith(".eaf")]
     combined_eaf = reduce(merge, dir_list)
     write_eaf(combined_eaf)
